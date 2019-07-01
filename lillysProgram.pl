@@ -12,21 +12,19 @@ print "\n$bars\n";
 print "\nWhat is your name?\n\n>";
 my $name = <STDIN>;
 chomp $name;
+print "\n$bars\n";
 
 while ($replay eq 'TRUE') {
-    print "\n$bars\n";
-    print "I understand you like unicorns...I can draw one for you!\n\n";
-    print "\nIs that true?(Type yes or no)\n>";
-    my $yesNo = <STDIN>;
-    chomp $yesNo;
+    my $menuSelection = menuPrompt($name);
 
-    if ($yesNo eq "yes" or
-        $yesNo eq "YES" or
-        $yesNo eq "Y" or
-        $yesNo eq "y") {
-        printUnicorn();
+    if ($menuSelection eq undef or $menuSelection < 1 or $menuSelection >5){
+        printDragon();
     } else {
-        printFairy();
+        printUnicorn()  if $menuSelection == 1;
+        printHorse()    if $menuSelection == 2;
+        printFairy()    if $menuSelection == 3;
+        printPrincess() if $menuSelection == 4;
+        printPeacock()  if $menuSelection == 5;
     }
 
     $replay = replayPrompt();
@@ -37,6 +35,34 @@ exitProgram();
 #----------------------------
 # subroutines
 #----------------------------
+sub menuPrompt {
+    my $name = shift;
+
+    print "
+           Welcome $name!!
+
+           ______________________________
+         /                               \
+        |   |      YE OLDE MENU          |
+         __ |                            |
+            |                            |
+            | Please maketh thine choice!|
+            |                            |
+            | 1:  Draw Unicorn           |
+            | 2:  Draw Horse             |
+            | 3:  Draw Fairy             |
+            | 4:  Draw Princess          |
+            | 5:  Draw Peacock           |
+            |                            |
+            |   _________________________|___
+            |  /                            /
+            \_/____________________________/
+    >";
+    my $choice = <STDIN>;
+    chomp $choice;
+    return $choice;
+}
+
 sub printUnicorn {
     return print qq|
                             /
@@ -51,7 +77,6 @@ sub printUnicorn {
             \\   '"  ./
              '"      '"
     |;
-
 }
 
 sub printFairy {
@@ -65,6 +90,105 @@ sub printFairy {
             .'/|\'.^
            '..'|'..'
     ";
+}
+
+sub printHorse {
+    print qq" 
+                                     |\    /|
+                                  ___| \,,/_/
+                               ---__/ \/    \
+                              __--/     (D)  \
+                              _ -/    (_      \
+                             // /       \_ /  -\
+       __-------_____--___--/           / \_ O o)
+      /                                 /   \__/
+     /                                 /
+    ||          )                   \_/\
+    ||         /              _      /  |
+    | |      /--______      ___\    /\  :
+    | /   __-  - _/   ------    |  |   \ \
+     |   -  -   /                | |     \ )
+     |  |   -  |                 | )     | |
+      | |    | |                 | |    | |
+      | |    < |                 | |   |_/
+      < |    /__\                <  \
+      /__\                       /___\
+
+    ";
+}
+
+sub printPrincess {
+    print qq|
+                         __
+                        /__`.
+                       / \ `\\
+                      /   \  `\
+                     /     \   \
+                    /_______\  /\
+                    (((( ))))
+                   (((' . ')))
+                   (((\_-_/)))
+                   (((_) (_)))
+                  /((( \ / )))\
+                 / (((  ^  ))) \
+                / / ((  ^  )) \ \
+               ( (   \  ^  /   ) )
+                \ \   )www(   / /
+                 `\\ /     \ //'
+                   /'       `\
+                  /           \
+                 /             \
+                /               \
+               /                 \
+              /                   \
+             /                     \
+            /                       \
+           /                         \
+          /                           \
+         I                             I
+          `-----......_____......-----'
+
+    |;
+}
+
+sub printPeacock {
+    print qq[
+                    _   _
+                 __/o'V'o\__
+              __/o \  :  / o\__
+             /o `.  \ : /  .' o\
+            _\    '. /"\ .'    /_
+           /o `-._  '\v/'  _.-` o\
+           \_     `-./ \.-`     _/
+          /o ``---._/   \_.---'' o\
+          \_________\   /_________/
+                    '\_/'
+                    _|_|_
+     ];
+}
+
+sub printDragon {
+    print qq{
+
+
+        !!!BAD CHOICE!  HERE COMES THE DRAGON!!!
+    
+
+
+           (  )   /\   _                 (     
+            \ |  (  \ ( \.(               )                      _____
+          \  \ \  `  `   ) \             (  ___                 / _   \
+         (_`    \+   . x  ( .\            \/   \____-----------/ (o)   \_
+        - .-               \+  ;          (  O                           \____
+                                  )        \_____________  `              \  /
+        (__                +- .( -'.- <. - _  VVVVVVV VV V\                 \/
+        (_____            ._._: <_ - <- _  (--  _AAAAAAA__A_/                  |
+          .    /./.+-  . .- /  +--  - .     \______________//_              \_______
+          (__ ' /x  / x _/ (                                  \___'          \     /
+         , x / ( '  . / .  /                                      |           \   /
+            /  /  _/ /    +                                      /              \/
+           '  (__/                                             /                  \
+    };
 }
 
 sub replayPrompt {
